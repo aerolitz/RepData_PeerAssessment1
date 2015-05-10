@@ -1,37 +1,54 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-
-author: Rafael Alarcon Borghi
-date: 10-May-2015
-
-
-output: 
-  html_document: 
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
+Rafael Alarcon Borghi  
+10-May-2015  
 <br>
 
 ### Preparation
 echo = TRUE (so, someone else will be able to read the code)<br>
 <br>
 <b>Loading "ggplot2" library</b>
-```{r}
+
+```r
 if (!require("ggplot2")) {
         install.packages("ggplot2")
 }
+```
+
+```
+## Loading required package: ggplot2
+```
+
+```
+## Warning: package 'ggplot2' was built under R version 3.1.3
+```
+
+```r
 require("ggplot2")
 ```
 <br>
 <b>Loading "plyr"</b>
-```{r}
+
+```r
 if (!require("plyr")) {
         install.packages("plyr")
 }
+```
+
+```
+## Loading required package: plyr
+```
+
+```
+## Warning: package 'plyr' was built under R version 3.1.3
+```
+
+```r
 require("plyr")
 ```
 <br>
 <b>Setting Work directory</b>
-```{r}
+
+```r
 setwd("~/R/repdata-014/RepData_PeerAssessment1")
 ```
 <br><br>
@@ -40,24 +57,28 @@ setwd("~/R/repdata-014/RepData_PeerAssessment1")
 ### 1.1 - Load the data (i.e. read.csv())
 <b>Assuming that the file 'activity.csv' is ready, load the file into an variable, setting up each classes of the columns. <br>
 It's necessary to unzip the file into the working directory.</b>
-```{r}
+
+```r
 arquivo <- read.csv("activity.csv", colClasses = c("integer", "Date", "factor"))
 ```
 <br>
 
 ### 1.2 - Process/transform the data (if necessary) into a format suitable for your analysis
 <b>Removing NA values</b>
-```{r}
+
+```r
 arquivoSemNA <- na.omit(arquivo)
 ```
 <b>Splitting the Date into 'Day', 'Month' and 'Year' columns</b>
-```{r}
+
+```r
 arquivoSemNA$dia <- as.numeric(format(arquivoSemNA$date, "%d"))
 arquivoSemNA$mes <- as.numeric(format(arquivoSemNA$date, "%m"))
 arquivoSemNA$ano <- as.numeric(format(arquivoSemNA$date, "%Y"))
 ```
 <b>Re-starting row numbering</b>
-```{r}
+
+```r
 rownames(arquivoSemNA) <- 1:nrow(arquivoSemNA)
 ```
 <br><br>
@@ -66,7 +87,8 @@ rownames(arquivoSemNA) <- 1:nrow(arquivoSemNA)
 <b>For this part of the assignment, you can ignore the missing values in the dataset.</b><br>
 
 ### 2.1 - Make a histogram of the total number of steps taken each day
-```{r}
+
+```r
 grafico <-      
         ggplot(arquivoSemNA, aes(x = date, y = steps)) +
         geom_bar(stat = "identity") +
@@ -76,9 +98,12 @@ grafico <-
 print(grafico)
 ```
 
+![](PA1_template_files/figure-html/unnamed-chunk-8-1.png) 
+
 ### 2.2 -  Calculate and report the mean and median total number of steps taken per day
 <b>Calculating total number of steps taken per day</b>
-```{r}
+
+```r
 SomaSteps <- ddply(
         arquivoSemNA
         ,c("date")
@@ -87,13 +112,29 @@ SomaSteps <- ddply(
 )
 ```
 <b>Mean of total number of steps taken per day</b>
-```{r}
+
+```r
 mean(SomaSteps$steps)
+```
+
+```
+## [1] 10766.19
+```
+
+```r
 Media <- mean(SomaSteps$steps)
 ```
 <b>Median of total number of steps taken per day</b>
-```{r}
+
+```r
 median(SomaSteps$steps)
+```
+
+```
+## [1] 10765
+```
+
+```r
 Mediana <- median(SomaSteps$steps)
 ```
 <br><br>
@@ -101,7 +142,8 @@ Mediana <- median(SomaSteps$steps)
 ## What is the average daily activity pattern?
 ### 3.1 - Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 <b>Calculating average number of steps taken in each 5 min intervals</b>
-```{r}
+
+```r
 MediaSteps <- ddply(
         arquivoSemNA
         ,c("interval")
@@ -110,11 +152,13 @@ MediaSteps <- ddply(
 )
 ```
 <b>Changing the class of interval to numeric</b>
-```{r}
+
+```r
 MediaSteps$intervalo <- as.numeric(as.character(MediaSteps$interval))
 ```
 <b>Ploting the results</b>
-```{r}
+
+```r
 grafico <-      
         ggplot(MediaSteps, aes(x = intervalo, y = media)) +
         geom_line(color = "green") +
@@ -124,10 +168,18 @@ grafico <-
 print(grafico)
 ```
 
+![](PA1_template_files/figure-html/unnamed-chunk-14-1.png) 
+
 ### 3.2 - Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 <b>Verifying if the max value of the mean in the 'MediaSteps' data set<b>
-```{r}
+
+```r
 MediaSteps[MediaSteps$media == max(MediaSteps$media), ]
+```
+
+```
+##     interval    media intervalo
+## 272      835 206.1698       835
 ```
 <br><br>
 
@@ -135,8 +187,13 @@ MediaSteps[MediaSteps$media == max(MediaSteps$media), ]
 <b>Note that there are a number of days/intervals where there are missing values (coded as NA). The presence of missing days may introduce biasinto some calculations or summaries of the data.</b><br>
 
 ### 4.1 - Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)
-```{r}
+
+```r
 sum(is.na(arquivo))
+```
+
+```
+## [1] 2304
 ```
 <br>
 
@@ -146,11 +203,13 @@ sum(is.na(arquivo))
 
 ### 4.3 - Create a new dataset that is equal to the original dataset but with the missing data filled in.
 <b>Creating a new dataset...</b>
-```{r}
+
+```r
 NApreenchido <- arquivo
 ```
 <b>Using the previous dataset with the calculated mean, apply it to the new created dataset</b>
-```{r}
+
+```r
 for (i in 1:nrow(NApreenchido)) {
         ## If find a 'NA' value
         if (is.na(NApreenchido$steps[i])) {
@@ -163,7 +222,8 @@ for (i in 1:nrow(NApreenchido)) {
 
 ### 4.4 - Make a histogram of the total number of steps taken each day and calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
 <b>Histogram of the total number of steps taken each day</b>
-```{r}
+
+```r
 grafico <-      
         ggplot(NApreenchido, aes(x = date, y = steps)) +
         geom_bar(stat = "identity") +
@@ -172,9 +232,12 @@ grafico <-
         ggtitle("Total number of steps taken each day")
 print(grafico)
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-19-1.png) 
 <br>
 <b>Calculating new total number of steps taken per day</b>
-```{r}
+
+```r
 SomaSteps2 <- ddply(
          NApreenchido
         ,c("date")
@@ -183,19 +246,47 @@ SomaSteps2 <- ddply(
 )
 ```
 <b>New mean of total number of steps taken per day</b>
-```{r}
+
+```r
 mean(SomaSteps2$steps)
+```
+
+```
+## [1] 10766.19
+```
+
+```r
 NMedia <- mean(SomaSteps2$steps)
 ```
 <b>New median of total number of steps taken per day</b>
-```{r}
+
+```r
 median(SomaSteps2$steps)
+```
+
+```
+## [1] 10766.19
+```
+
+```r
 NMediana <- median(SomaSteps2$steps)
 ```
 <b>Results</b>
-```{r}
+
+```r
 NMedia - Media
+```
+
+```
+## [1] 0
+```
+
+```r
 NMediana - Mediana
+```
+
+```
+## [1] 1.188679
 ```
 ####ANSWER: The values differs a little bit. The means are the same in both cases but the median in the new dataset is greater than in the 'old' one.
 <br>
@@ -205,22 +296,25 @@ NMediana - Mediana
 
 ### 5.1 - Create a new factor variable in the dataset with two levels -- "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
 <b>Creating the new column with the name of the week days.</b>
-```{r}
+
+```r
 NApreenchido$tipodia <- factor(format(NApreenchido$date, "%A"))
 ```
 <b>Grouping the week days into the 2 levels: "weekday" and "weekend"</b><br>
 <i><b><WARNING: As the default language of my computer is 'Portuguese', all the names of week days are in this language. Change it for the correct match of the current language of your system.</b></i>
-```{r}
+
+```r
 levels(NApreenchido$tipodia) <- list(
-         weekday = c("segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira")
-        ,weekend = c("sábado", "domingo")
+         weekday = c("segunda-feira", "terÃ§a-feira", "quarta-feira", "quinta-feira", "sexta-feira")
+        ,weekend = c("sÃ¡bado", "domingo")
 )
 ```
 <br>
 
 ### 5.2 - Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
 <b>Calculating average number of steps taken in each 5 min intervals</b>
-```{r}
+
+```r
 MediaSteps2 <- ddply(
         NApreenchido
         ,c("interval", "tipodia")
@@ -229,11 +323,13 @@ MediaSteps2 <- ddply(
 )
 ```
 <b>Changing the class of interval to numeric</b>
-```{r}
+
+```r
 MediaSteps2$intervalo <- as.numeric(as.character(MediaSteps2$interval))
 ```
 <b>Ploting the results</b>
-```{r}
+
+```r
 grafico <-      
         ggplot(MediaSteps2, aes(x = intervalo, y = media)) +
         geom_bar(stat = "identity") +
@@ -243,3 +339,5 @@ grafico <-
         facet_grid(. ~ tipodia, scales = "free")
 print(grafico)
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-28-1.png) 
