@@ -239,7 +239,8 @@ print(grafico)</code></pre>
 <h3>5.1 - Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.</h3>
 <p><b>Creating the new column with the name of the week days.</b></p>
 <pre class="r"><code>NApreenchido$tipodia &lt;- factor(format(NApreenchido$date, &quot;%A&quot;))</code></pre>
-<p><b>Grouping the week days into the 2 levels: “weekday” and “weekend”</b><br> <i><b><WARNING: As the default language of my computer is 'Portuguese', all the names of week days are in this language. Change it for the correct match of the current language of your system.< b></i></p>
+<p><b>Grouping the week days into the 2 levels: “weekday” and “weekend”</b><br></p>
+<p><i><b>WARNING: As the default language of my computer is ‘Portuguese’, all the names of week days are in this language. Change it for the correct match of the current language of your system.</b></i></p>
 <pre class="r"><code>levels(NApreenchido$tipodia) &lt;- list(
          weekday = c(&quot;segunda-feira&quot;, &quot;terça-feira&quot;, &quot;quarta-feira&quot;, &quot;quinta-feira&quot;, &quot;sexta-feira&quot;)
         ,weekend = c(&quot;sábado&quot;, &quot;domingo&quot;)
