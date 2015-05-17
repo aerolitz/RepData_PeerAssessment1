@@ -54,7 +54,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <div id="header">
 <h1 class="title">Reproducible Research: Peer Assessment 1</h1>
 <h4 class="author"><em>Rafael Alarcon Borghi</em></h4>
-<h4 class="date"><em>10-May-2015</em></h4>
+<h4 class="date"><em>17-May-2015</em></h4>
 </div>
 
 
@@ -240,7 +240,7 @@ print(grafico)</code></pre>
 <p><b>Creating the new column with the name of the week days.</b></p>
 <pre class="r"><code>NApreenchido$tipodia &lt;- factor(format(NApreenchido$date, &quot;%A&quot;))</code></pre>
 <p><b>Grouping the week days into the 2 levels: “weekday” and “weekend”</b><br></p>
-<p><i><b>WARNING: As the default language of my computer is ‘Portuguese’, all the names of week days are in this language. Change it for the correct match of the current language of your system.</b></i></p>
+<p><span style="color:red"><b>WARNING: As the default language of my computer is ‘Portuguese’, all the names of week days are in this language. Change it for the correct match of the current language of your system.</b></span></p>
 <pre class="r"><code>levels(NApreenchido$tipodia) &lt;- list(
          weekday = c(&quot;segunda-feira&quot;, &quot;terça-feira&quot;, &quot;quarta-feira&quot;, &quot;quinta-feira&quot;, &quot;sexta-feira&quot;)
         ,weekend = c(&quot;sábado&quot;, &quot;domingo&quot;)

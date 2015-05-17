@@ -2,11 +2,11 @@
 title: "Reproducible Research: Peer Assessment 1"
 
 author: Rafael Alarcon Borghi
-date: 10-May-2015
+date: 17-May-2015
 
 
 output: 
-  html_document: 
+  html_document:
     keep_md: true
 ---
 <br>
@@ -210,7 +210,7 @@ NApreenchido$tipodia <- factor(format(NApreenchido$date, "%A"))
 ```
 <b>Grouping the week days into the 2 levels: "weekday" and "weekend"</b><br>
 
-<i><b>WARNING: As the default language of my computer is 'Portuguese', all the names of week days are in this language. Change it for the correct match of the current language of your system.</b></i>
+<span style="color:red"><b>WARNING: As the default language of my computer is 'Portuguese', all the names of week days are in this language. Change it for the correct match of the current language of your system.</b></span>
 ```{r}
 levels(NApreenchido$tipodia) <- list(
          weekday = c("segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira")

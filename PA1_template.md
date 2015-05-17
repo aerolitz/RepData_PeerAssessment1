@@ -1,6 +1,6 @@
 # Reproducible Research: Peer Assessment 1
 Rafael Alarcon Borghi  
-10-May-2015  
+17-May-2015  
 <br>
 
 ### Preparation
@@ -302,7 +302,7 @@ NApreenchido$tipodia <- factor(format(NApreenchido$date, "%A"))
 ```
 <b>Grouping the week days into the 2 levels: "weekday" and "weekend"</b><br>
 
-<i><b>WARNING: As the default language of my computer is 'Portuguese', all the names of week days are in this language. Change it for the correct match of the current language of your system.</b></i>
+<span style="color:red"><b>WARNING: As the default language of my computer is 'Portuguese', all the names of week days are in this language. Change it for the correct match of the current language of your system.</b></span>
 
 ```r
 levels(NApreenchido$tipodia) <- list(
